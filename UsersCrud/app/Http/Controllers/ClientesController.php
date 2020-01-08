@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
     public function index() {
-        return 'Exibir tela geral. Listar todos os clientes da base de dados, ou uma mensagem se não houver.';
+        // Exibir tela geral. Listar todos os clientes da base de dados, ou uma mensagem se não houver.
+        return view('main-layout');
     }
 
     public function create() {

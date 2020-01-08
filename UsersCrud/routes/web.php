@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome'); // modificar para um mock de tela de login (any name x pwd gets in)
+    return view('larawelcome'); // modificar para um mock de tela de login (any name x pwd gets in)
 });
 
 Route::get('/clientes', 'ClientesController@index');
