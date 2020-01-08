@@ -1,0 +1,26 @@
+=== Definição ===
+Sistema de cadastro de clientes com funcionalidades de adicionar, editar, listar e deletar.
+Em duas telas:
+a) Listagem dos clientes em grid. Botões para adicionar, editar e remover.
+b) Exibição individual para criação/edição de um cliente.
+
+=== Regras ===
+- Usar PHP como linguagem
+- Usar MySQL como banco de dados
+- Consumir webservice de consulta de CEP, "viacep.com.br"
+- Qualquer framework PHP é permitido
+- Incluir migrations ou script para criação do BD.
+
+- Campos de um usuário:
+	> Nome [*]
+	> Data de nascimento [*]
+	> Sexo [*]
+	> CEP (validar com API)
+	> Endereço
+	> Número
+	> Complemento
+	> Bairro
+	> Cidade
+	> Estado
+
+
