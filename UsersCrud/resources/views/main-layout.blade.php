@@ -14,7 +14,7 @@
     <div id="topBannerBox">
         <div class="container">
             <a type="button" class="btn btn-light" href="/clientes">Voltar à listagem</a>
-            <h2>Cadastro de cliente</h2>
+            <h2 class="blocky-text">Cadastro de cliente</h2>
         </div>
     </div>
 
@@ -25,24 +25,24 @@
                     <h4 class="col-12">Dados pessoais</h4>
                     <div class="form-group col-6">
                         <label for="inputNomeCompleto">Nome completo <span class="obrigatorio">&#42;</span></label>
-                        <input type="text" id="inputNomeCompleto" class="form-control" placeholder="Nome completo do cliente">
-                        <small id="helperNomeCompleto" class="form-text text-muted">Atenção: placeholder erros</small>
+                        <input type="text" id="inputNomeCompleto" class="form-control" placeholder="Nome completo do cliente" maxlength="150" required>
+                        <small id="helperNomeCompleto" class="form-text">Digite o nome completo no cliente</small>
                     </div>
                     <div class="form-group col-3">
                         <label for="inputDataNascimento">Data de nascimento <span class="obrigatorio">&#42;</span></label>
-                        <input type="text" id="inputDataNascimento" class="form-control" placeholder="00/00/0000">
-                        <small id="helperDataNascimento" class="form-text text-muted">Atenção: placeholder erros</small>
+                        <input type="date" id="inputDataNascimento" class="form-control" required>
+                        <small id="helperDataNascimento" class="form-text">Digite a data de nascimento</small>
                     </div>
                     <div class="form-group col-3">
                         <label for="selectSexo">Sexo <span class="obrigatorio">&#42;</span></label>
-                        <select id="selectSexo" class="form-control">
+                        <select id="selectSexo" class="form-control" required>
                             <option selected disabled>Escolha o sexo...</option>
                             <option value="1">Masculino</option>
                             <option value="2">Feminino</option>
                             <option value="3">Não-binário</option>
                             <option value="0">Não informado</option>
                         </select>
-                        <small id="helperSexo" class="form-text text-muted">Atenção: placeholder erros</small>
+                        <small id="helperSexo" class="form-text"></small>
                     </div>
                 </section>
 
@@ -51,7 +51,8 @@
 
                     <div class="form-group col-2">
                         <label for="inputCEP">CEP</label>
-                        <input type="text" id="inputCEP" class="form-control" placeholder="Apenas números">
+                        <input type="text" id="inputCEP" class="form-control" placeholder="Apenas números" maxlength="8">
+                        <small id="helperCEP" class="form-text">Digite apenas números</small>
                     </div>
                     <div class="form-group col-5">
                         <label for="inputLogradouro">Logradouro</label>
@@ -124,7 +125,10 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/clienteFormValidation.js"></script>
 </body>
 </html>

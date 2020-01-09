@@ -3,6 +3,7 @@
     width: 100%;
     height: auto;
     padding: 20px 0 24px 0;
+    background-color: #777;
     background-image: url('/images/placeholder169-1200x400.jpg');
     background-size: cover;
 }
@@ -10,6 +11,8 @@
 #topBannerBox h2 {
     margin: 50px 0 0 0;
     color: #f4f4f4;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 #contentBox {
@@ -41,4 +44,25 @@
     color: red;
 }
 
+#formCriar small.form-text {
+    color: #777;
+}
+#formCriar small.form-text.invalido {
+    color: #f33;
+}
 
+#formCriar input.invalido {
+    color: #f42626;
+    border-color: #f11;
+}
+#formCriar input.invalido:focus {
+    box-shadow: 0 0 0 .2rem rgba(255, 0, 0, 0.3);
+}
+
+#formCriar select.invalido {
+    color: #f42626;
+    border-color: #f11;
+}
+#formCriar select.invalido:focus {
+    box-shadow: 0 0 0 .2rem rgba(255, 0, 0, 0.3);
+}
