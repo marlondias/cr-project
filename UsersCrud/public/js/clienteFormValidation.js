@@ -63,36 +63,60 @@ class EnderecoChanger {
         this.estado = document.getElementById(elEst);
     }
 
-    setFieldsStateTo(state) {
-        const fieldNames = this.entries();
-        console.log(fieldNames);
+    disableAllFields() {
+        // Adicionar DISABLED nos inputs de endereço, exceto CEP
+        this.logradouro.setAttribute('disabled', 'true');
+        this.numero.setAttribute('disabled', 'true');
+        this.complemento.setAttribute('disabled', 'true');
+        this.bairro.setAttribute('disabled', 'true');
+        this.cidade.setAttribute('disabled', 'true');
+        this.estado.setAttribute('disabled', 'true');
+        console.log('Campos de endereço desabilitados.')
+    }
+
+    enableAllFields() {
+        // Remover DISABLED dos inputs de endereço, exceto CEP
+        this.logradouro.removeAttribute('disabled');
+        this.numero.removeAttribute('disabled');
+        this.complemento.removeAttribute('disabled');
+        this.bairro.removeAttribute('disabled');
+        this.cidade.removeAttribute('disabled');
+        this.estado.removeAttribute('disabled');
+        console.log('Campos de endereço habilitados.')
     }
 
 }
-const camposEndereco = {
 
-};
-function viaCEP() {
-    console.log('Ativando via CEP!');
-    console.log()
+function showJSON() {
 }
 
-function setCamposEndereco(state) {
-    if (typeof state != 'boolean') return;
-    if (state) {
-        // Remover disabled dos inputs de endereço
-    }
-    else {
-        // Adicionar disabled nos inputs de endereço
+let jsonCallback;
+function viaCEP(cep) {
+    console.log('Ativando via CEP para ' + cep + '...');
 
-    }
+    let url = 'https://www.viacep.com.br/ws/' + cep + '/json/unicode/';
+
+    let request = new XMLHttpRequest();
+    request.open('get', url, true);
+    request.onload = () => {
+        console.log(this.responseText);
+        console.log(this.response);
+    };
+    request.send();
+
 }
 
-const inputs = new Map;
+
+let inputs = new Map; // TODO: tirar do global após testes
+let enderecoChng;
 
 window.onload = () => {
 
-    // Capturar referência a todos os inputs do form, definindo regras específicas
+    // Capturar referências aos campos de endereço para manipulação centralizada
+    enderecoChng = new EnderecoChanger('inputLogradouro', 'inputNumero', 'inputComplemento', 'inputBairro', 'inputCidade', 'selectEstado');
+
+
+    // Capturar referência a todos os inputs do form, definindo regras específicas de validação
     inputs.set('nome', new ClientFormInput('inputNomeCompleto', 'helperNomeCompleto', 'Digite o nome completo no cliente', (value) => {
         // Regra: String alfanumérica, case insensitive, com unicode
         const regex = /[a-b0-9]+/i;
@@ -128,7 +152,6 @@ window.onload = () => {
         }
     }));
 
-    const enderecoCh = new EnderecoChanger('inputLogradouro', 'inputNumero', 'inputComplemento', 'inputBairro', 'inputCidade', 'selectEstado');
 
 
 /*    //Iterar pelos inputs adicionando eventos de saida do campo
