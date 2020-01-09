@@ -1,0 +1,44 @@
+#topBannerBox {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px 0 24px 0;
+    background-image: url('/images/placeholder169-1200x400.jpg');
+    background-size: cover;
+}
+
+#topBannerBox h2 {
+    margin: 50px 0 0 0;
+    color: #f4f4f4;
+}
+
+#contentBox {
+    margin: 25px 0 50px 0;
+}
+
+#footerBox {
+    position: relative;
+    width: 100%;
+    padding: 16px 0 18px 0;
+    background-color: #3b3b3b;
+    color: #f0f0f0;
+}
+
+#formCriar section {
+    margin-bottom: 24px;
+}
+
+#formCriar h4 {
+    margin-bottom: 10px;
+}
+
+#formCriar label {
+    color: #555;
+    font-weight: bold;
+}
+
+#formCriar .obrigatorio {
+    color: red;
+}
+
+
