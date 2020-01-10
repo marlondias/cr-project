@@ -57,7 +57,7 @@
                                 </li>
                                 <li class="list-group-item campo-comum">
                                     <small class="label">Cidade:</small>
-                                    <span class="valor">{{ $cli->cidade ?? 'Não informado' }} - {{ $cli->end_uf ?? 'XX' }}</span>
+                                    <span class="valor">{{ $cli->end_cidade ?? 'Não informado' }} - {{ $cli->end_uf ?? 'XX' }}</span>
                                 </li>    
                                 <li class="list-group-item cliente-botoes">
                                     <a href="/clientes/{{ $cli->id }}" class="btn btn-info" title="Editar usuário"><i class="fas fa-user-edit"></i></a>

@@ -12,7 +12,7 @@
             </div>
             <div class="form-group col-3">
                 <label for="inputDataNascimento">Data de nascimento <span class="obrigatorio">&#42;</span></label>
-                <input type="date" name="data_nascimento" id="inputDataNascimento" class="form-control" maxlength="10" value="@if( null !== old('data_nascimento') ){{ old('data_nascimento', date('Y-m-d')) }} @elseif ( null !== $cliente->nascimento ){{ $cliente->nascimento }} @else{{ '' }} @endif" required>
+                <input type="date" name="data_nascimento" id="inputDataNascimento" class="form-control" maxlength="10" value="@if( null !== old('data_nascimento') ){{ old('data_nascimento', date('Y-m-d')) }}@elseif ( null !== $cliente->nascimento ){{ $cliente->nascimento }}@else{{ '' }}@endif" required>
                 <small id="helperDataNascimento" class="form-text">Digite a data de nascimento</small>
             </div>
             <div class="form-group col-3">
