@@ -123,8 +123,8 @@ window.onload = () => {
     
     inputs.set('nome', new ClientFormInput('inputNomeCompleto', 'helperNomeCompleto', 'Digite o nome completo no cliente', (value) => {
         // Regra: Permite letras (a-z) e alguns acentos comuns, case insensitive
-        const regex = /^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]{2,30}$/i;
-        return regex.test(value);
+        const regex = /^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]+$/i;
+        return regex.test(value.trim());
     }));
 
     inputs.set('nascimento', new ClientFormInput('inputDataNascimento', 'helperDataNascimento', 'Digite a data de nascimento', (value) => {

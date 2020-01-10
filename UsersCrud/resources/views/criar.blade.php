@@ -7,22 +7,22 @@
             <h4 class="col-12">Dados pessoais</h4>
             <div class="form-group col-6">
                 <label for="inputNomeCompleto">Nome completo <span class="obrigatorio">&#42;</span></label>
-                <input type="text" name="nome_completo" id="inputNomeCompleto" class="form-control" maxlength="100" placeholder="Nome completo do cliente" required>
+                <input type="text" name="nome_completo" id="inputNomeCompleto" class="form-control" maxlength="100" value="@if( null !== old('nome_completo') ){{ old('nome_completo') }} @endif" placeholder="Nome completo do cliente" required>
                 <small id="helperNomeCompleto" class="form-text">Digite o nome completo no cliente</small>
             </div>
             <div class="form-group col-3">
                 <label for="inputDataNascimento">Data de nascimento <span class="obrigatorio">&#42;</span></label>
-                <input type="date" name="data_nascimento" id="inputDataNascimento" class="form-control" maxlength="10" required>
+                <input type="date" name="data_nascimento" id="inputDataNascimento" class="form-control" maxlength="10" value="@if( null !== old('data_nascimento') ){{ old('data_nascimento', date('Y-m-d')) }} @endif" required>
                 <small id="helperDataNascimento" class="form-text">Digite a data de nascimento</small>
             </div>
             <div class="form-group col-3">
                 <label for="selectSexo">Sexo <span class="obrigatorio">&#42;</span></label>
                 <select name="sexo" id="selectSexo" class="form-control" required>
                     <option selected disabled>Escolha o sexo...</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Feminino</option>
-                    <option value="3">Não-binário</option>
-                    <option value="0">Não informado</option>
+                    <option value="1" @if( old('sexo') == '1' ){{ 'selected' }} @endif>Masculino</option>
+                    <option value="2" @if( old('sexo') == '2' ){{ 'selected' }} @endif>Feminino</option>
+                    <option value="3" @if( old('sexo') == '3' ){{ 'selected' }} @endif>Não-binário</option>
+                    <option value="0" @if( old('sexo') == '0' ){{ 'selected' }} @endif>Não informado</option>
                 </select>
                 <small id="helperSexo" class="form-text"></small>
             </div>
@@ -33,60 +33,60 @@
 
             <div class="form-group col-2">
                 <label for="inputCEP">CEP</label>
-                <input type="text" name="cep" id="inputCEP" class="form-control" maxlength="8" placeholder="00000000">
+                <input type="text" name="cep" id="inputCEP" class="form-control" maxlength="8" value="@if( null !== old('cep') ){{ old('cep') }} @else{{ '' }} @endif" placeholder="00000000">
                 <small id="helperCEP" class="form-text">Digite apenas números</small>
             </div>
             <div class="form-group col-5">
                 <label for="inputLogradouro">Logradouro</label>
-                <input type="text" name="ender_logr" id="inputLogradouro" class="form-control" maxlength="60" placeholder="Nome da rua, avenida, rodovia, etc">
+                <input type="text" name="ender_logr" id="inputLogradouro" class="form-control" maxlength="60" value="@if( null !== old('ender_logr') ){{ old('ender_logr') }} @else{{ '' }} @endif" placeholder="Nome da rua, avenida, rodovia, etc">
             </div>
             <div class="form-group col-2">
                 <label for="inputNumero">Número</label>
-                <input type="text" name="ender_num" id="inputNumero" class="form-control" maxlength="10" placeholder="Número externo">
+                <input type="text" name="ender_num" id="inputNumero" class="form-control" maxlength="10" value="@if( null !== old('ender_num') ){{ old('ender_num') }} @else{{ '' }} @endif" placeholder="Número externo">
             </div>
             <div class="form-group col-3">
                 <label for="inputComplemento">Complemento</label>
-                <input type="text" name="ender_comp" id="inputComplemento" class="form-control" maxlength="20" placeholder="Exs: Apto 5, Fundos">
+                <input type="text" name="ender_comp" id="inputComplemento" class="form-control" maxlength="20" value="@if( null !== old('ender_comp') ){{ old('ender_comp') }} @else{{ '' }} @endif" placeholder="Exs: Apto 5, Fundos">
             </div>
             <div class="form-group col-6">
                 <label for="inputBairro">Bairro</label>
-                <input type="text" name="ender_bairro" id="inputBairro" class="form-control" maxlength="60" placeholder="Nome oficial e sem abreviações">
+                <input type="text" name="ender_bairro" id="inputBairro" class="form-control" maxlength="60" value="@if( null !== old('ender_bairro') ){{ old('ender_bairro') }} @else{{ '' }} @endif" placeholder="Nome oficial e sem abreviações">
             </div>
             <div class="form-group col-3">
                 <label for="inputCidade">Cidade</label>
-                <input type="text" name="ender_cidade" id="inputCidade" class="form-control" maxlength="30" placeholder="Nome da cidade">
+                <input type="text" name="ender_cidade" id="inputCidade" class="form-control" maxlength="30" value="@if( null !== old('ender_cidade') ){{ old('ender_cidade') }} @else{{ '' }} @endif" placeholder="Nome da cidade">
             </div>
             <div class="form-group col-3">
                 <label for="selectEstado">Estado</label>
                 <select name="ender_uf" id="selectEstado" class="form-control">
                     <option selected disabled>Escolha o estado...</option>
-                    <option value="ac">Acre</option>
-                    <option value="al">Alagoas</option>
-                    <option value="ap">Amapá</option>
-                    <option value="am">Amazonas</option>
-                    <option value="ba">Bahia</option>
-                    <option value="ce">Ceará</option>
-                    <option value="df">Distrito Federal</option>
-                    <option value="es">Espírito Santo</option>
-                    <option value="go">Goiás</option>
-                    <option value="ma">Maranhão</option>
-                    <option value="mt">Mato Grosso</option>
-                    <option value="ms">Mato Grosso do Sul</option>
-                    <option value="mg">Minas Gerais</option>
-                    <option value="pa">Pará</option>
-                    <option value="pb">Paraíba</option>
-                    <option value="pr">Paraná</option>
-                    <option value="pe">Pernambuco</option>
-                    <option value="pi">Piauí</option>
-                    <option value="rj">Rio de Janeiro</option>
-                    <option value="rn">Rio Grande do Norte</option>
-                    <option value="rs">Rio Grande do Sul</option>
-                    <option value="ro">Rondônia</option>
-                    <option value="rr">Roraima</option>
-                    <option value="sc">Santa Catarina</option>
-                    <option value="sp">São Paulo</option>
-                    <option value="se">Sergipe</option>
-                    <option value="to">Tocantins</option>
+                    <option value="ac" @if( old('ender_uf') == 'ac' ){{ 'selected' }} @endif>Acre</option>
+                    <option value="al" @if( old('ender_uf') == 'al' ){{ 'selected' }} @endif>Alagoas</option>
+                    <option value="ap" @if( old('ender_uf') == 'ap' ){{ 'selected' }} @endif>Amapá</option>
+                    <option value="am" @if( old('ender_uf') == 'am' ){{ 'selected' }} @endif>Amazonas</option>
+                    <option value="ba" @if( old('ender_uf') == 'ba' ){{ 'selected' }} @endif>Bahia</option>
+                    <option value="ce" @if( old('ender_uf') == 'ce' ){{ 'selected' }} @endif>Ceará</option>
+                    <option value="df" @if( old('ender_uf') == 'df' ){{ 'selected' }} @endif>Distrito Federal</option>
+                    <option value="es" @if( old('ender_uf') == 'es' ){{ 'selected' }} @endif>Espírito Santo</option>
+                    <option value="go" @if( old('ender_uf') == 'go' ){{ 'selected' }} @endif>Goiás</option>
+                    <option value="ma" @if( old('ender_uf') == 'ma' ){{ 'selected' }} @endif>Maranhão</option>
+                    <option value="mt" @if( old('ender_uf') == 'mt' ){{ 'selected' }} @endif>Mato Grosso</option>
+                    <option value="ms" @if( old('ender_uf') == 'ms' ){{ 'selected' }} @endif>Mato Grosso do Sul</option>
+                    <option value="mg" @if( old('ender_uf') == 'mg' ){{ 'selected' }} @endif>Minas Gerais</option>
+                    <option value="pa" @if( old('ender_uf') == 'pa' ){{ 'selected' }} @endif>Pará</option>
+                    <option value="pb" @if( old('ender_uf') == 'pb' ){{ 'selected' }} @endif>Paraíba</option>
+                    <option value="pr" @if( old('ender_uf') == 'pr' ){{ 'selected' }} @endif>Paraná</option>
+                    <option value="pe" @if( old('ender_uf') == 'pe' ){{ 'selected' }} @endif>Pernambuco</option>
+                    <option value="pi" @if( old('ender_uf') == 'pi' ){{ 'selected' }} @endif>Piauí</option>
+                    <option value="rj" @if( old('ender_uf') == 'rj' ){{ 'selected' }} @endif>Rio de Janeiro</option>
+                    <option value="rn" @if( old('ender_uf') == 'rn' ){{ 'selected' }} @endif>Rio Grande do Norte</option>
+                    <option value="rs" @if( old('ender_uf') == 'rs' ){{ 'selected' }} @endif>Rio Grande do Sul</option>
+                    <option value="ro" @if( old('ender_uf') == 'ro' ){{ 'selected' }} @endif>Rondônia</option>
+                    <option value="rr" @if( old('ender_uf') == 'rr' ){{ 'selected' }} @endif>Roraima</option>
+                    <option value="sc" @if( old('ender_uf') == 'sc' ){{ 'selected' }} @endif>Santa Catarina</option>
+                    <option value="sp" @if( old('ender_uf') == 'sp' ){{ 'selected' }} @endif>São Paulo</option>
+                    <option value="se" @if( old('ender_uf') == 'se' ){{ 'selected' }} @endif>Sergipe</option>
+                    <option value="to" @if( old('ender_uf') == 'to' ){{ 'selected' }} @endif>Tocantins</option>
                 </select>
             </div>
         </section>

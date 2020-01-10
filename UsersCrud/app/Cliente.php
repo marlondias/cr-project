@@ -10,7 +10,7 @@ class Cliente extends Model
 
     // Regras para validação de cada campo desse model
     private static $formValidationRules = [
-        'nome_completo' => 'required|string|max:100|regex:/^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]{2,30}$/i',
+        'nome_completo' => 'required|string|max:100|regex:/^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]+$/i',
         'data_nascimento' => 'required|date',
         'sexo' => 'required|integer|min:0|max:3',
         'cep' => 'nullable|numeric|digits:8',

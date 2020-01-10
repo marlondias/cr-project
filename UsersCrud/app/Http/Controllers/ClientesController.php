@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use Redirect;
 use Validator;
 use App\Cliente;
 
@@ -13,10 +12,12 @@ class ClientesController extends Controller
 {
     public function index() {
         // Exibir tela geral. Listar todos os clientes da base de dados, ou uma mensagem se não houver.
+        $clientes = Cliente::all();
         return view('index')
         ->with('txtRetorno', 'Sair do sistema')
         ->with('urlRetorno', '/')
-        ->with('txtTitulo', 'Listagem de clientes');
+        ->with('txtTitulo', 'Listagem de clientes ('. count($clientes) .')')
+        ->with('clientes', $clientes);
     }
 
     public function create() {
@@ -28,42 +29,37 @@ class ClientesController extends Controller
     }
 
     public function store(Request $request) {
-        // Validar entradas do usuário, segundo as regras do modelo
+        // Validar entradas do usuário, segundo as regras do modelo [OK]
         $validator = Validator::make($request->all(), Cliente::getFormValidationRules());
 
         if ($validator->fails()) {
-            return $validator;
-            /*
-            return Redirect::to('/clientes/criar')
-            ->withErrors($validator)
-            ->withInput($request->all());*/
-        }
-        else {
-            // Registrar no BD
-            $cliente = new Cliente;
-
-            $nome = $request->input('nome_completo');
-            $cliente->nome_completo = $request->input('nome_completo');
-            $cliente->nascimento = $request->input('data_nascimento');
-            $cliente->sexo = $request->input('sexo');
-            $cliente->end_cep = $request->input('cep');
-            $cliente->end_logradouro = $request->input('ender_logr');
-            $cliente->end_numero = $request->input('ender_num');
-            $cliente->end_complemento = $request->input('ender_comp');
-            $cliente->end_bairro = $request->input('ender_bairro');
-            $cliente->end_cidade = $request->input('ender_cidade');
-            $cliente->end_uf = $request->input('ender_uf');
-
-            $cliente->save();
-
-            // Redirecionar com aviso
-            Session::flash('message_info', 'Cliente de nome "' . $nome . '" foi adicionado.');
-            return Redirect::to('/clientes');
+            // Voltar ao formulário com mensagem e valores
+            Session::flash('message_error', 'Não foi possível prosseguir. Verifique os campos preenchidos.');
+            return redirect('/clientes/criar')
+            ->withInput();
         }
 
+        // Registrar no BD
+        $cliente = new Cliente;
 
+        $nome = $request->input('nome_completo');
+        $cliente->nome_completo = $request->input('nome_completo');
+        $cliente->nascimento = $request->input('data_nascimento');
+        $cliente->sexo = $request->input('sexo');
+        $cliente->end_cep = $request->input('cep');
+        $cliente->end_logradouro = $request->input('ender_logr');
+        $cliente->end_numero = $request->input('ender_num');
+        $cliente->end_complemento = $request->input('ender_comp');
+        $cliente->end_bairro = $request->input('ender_bairro');
+        $cliente->end_cidade = $request->input('ender_cidade');
+        $cliente->end_uf = $request->input('ender_uf');
 
-        return 'Cliente X registrado!';
+        $cliente->save();
+
+        // Redirecionar com aviso
+        Session::flash('message_info', 'Cliente de nome "' . $nome . '" foi adicionado.');
+        return redirect('/clientes');
+
     }
 
     public function edit($id) {
@@ -72,29 +68,54 @@ class ClientesController extends Controller
 
         if (!$cliente){
             Session::flash('message_error', 'Não exite cliente cadastrado com ID '.$id.'.');
-            return Redirect::to('/clientes');
+            return redirect('/clientes');
         }
 
-        return view('criar')
+        return view('editar')
         ->with('txtRetorno', 'Voltar à listagem')
         ->with('urlRetorno', '/clientes')
         ->with('txtTitulo', 'Editando o cliente de ID '. $id)
         ->with('cliente', $cliente);
     }
 
-    public function update($id) {
-        // Validar novamente os novos dados e atualizar registro do banco de dados.
-        return 'Cliente X teve seus dados atualizados!';
+    public function update($id, Request $request) {
+        // Validar entradas do usuário, segundo as regras do modelo 
+        $validator = Validator::make($request->all(), Cliente::getFormValidationRules());
+
+        if ($validator->fails()) {
+            // Voltar ao formulário com mensagem e valores
+            Session::flash('message_error', 'Não foi possível prosseguir. Verifique os campos preenchidos.');
+            return redirect('/clientes/'.$id)
+            ->withInput();
+        }
+
+        // Modificar no BD
+        $cliente = Cliente::find($id);
+        $cliente->nome_completo = $request->input('nome_completo');
+        $cliente->nascimento = $request->input('data_nascimento');
+        $cliente->sexo = $request->input('sexo');
+        $cliente->end_cep = $request->input('cep');
+        $cliente->end_logradouro = $request->input('ender_logr');
+        $cliente->end_numero = $request->input('ender_num');
+        $cliente->end_complemento = $request->input('ender_comp');
+        $cliente->end_bairro = $request->input('ender_bairro');
+        $cliente->end_cidade = $request->input('ender_cidade');
+        $cliente->end_uf = $request->input('ender_uf');
+        $cliente->save();
+
+        // Redirecionar com aviso
+        Session::flash('message_info', 'Cliente de ID "' . $id . '" foi modificado.');
+        return redirect('/clientes');
     }
 
     public function delete($id) {
-        // Encontrar um Cliente com a ID informada, guardar nome e remover do BD.
+        // Encontrar um Cliente com a ID informada, guardar nome e remover do BD. [OK]
         $cliente = Cliente::find($id);
         $nome = $cliente->nome_completo;
         $cliente->delete();
 
         // Preparar uma mensagem e redirecionar para a Index
-        Session::flash('flash_message', 'O cliente "' . $nome . '" foi removido de sua base de dados!');
-        return Redirect::to('/clientes');
+        Session::flash('message_info', 'O cliente de ID '. $id .' e nome "' . $nome . '" foi removido de sua base de dados!');
+        return redirect('/clientes');
     }
 }
