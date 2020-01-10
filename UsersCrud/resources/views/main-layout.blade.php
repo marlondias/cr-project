@@ -51,20 +51,20 @@
 
                     <div class="form-group col-2">
                         <label for="inputCEP">CEP</label>
-                        <input type="text" id="inputCEP" class="form-control" placeholder="Apenas números" maxlength="8">
+                        <input type="text" id="inputCEP" class="form-control" maxlength="8" placeholder="00000000">
                         <small id="helperCEP" class="form-text">Digite apenas números</small>
                     </div>
                     <div class="form-group col-5">
                         <label for="inputLogradouro">Logradouro</label>
-                        <input type="text" id="inputLogradouro" class="form-control" placeholder="Nome da rua, avenida, rodovia, etc">
+                        <input type="text" id="inputLogradouro" class="form-control" maxlength="70" placeholder="Nome da rua, avenida, rodovia, etc">
                     </div>
                     <div class="form-group col-2">
                         <label for="inputNumero">Número</label>
-                        <input type="text" id="inputNumero" class="form-control" placeholder="Número externo">
+                        <input type="text" id="inputNumero" class="form-control" maxlength="10" placeholder="Número externo">
                     </div>
                     <div class="form-group col-3">
                         <label for="inputComplemento">Complemento</label>
-                        <input type="text" id="inputComplemento" class="form-control" placeholder="Exs: Apto 5, Fundos">
+                        <input type="text" id="inputComplemento" class="form-control" maxlength="20" placeholder="Exs: Apto 5, Fundos">
                     </div>
 
                     <div class="form-group col-6">

@@ -26,7 +26,7 @@ class ClientFormInput {
         }
     }
 
-    validate() {
+    validate = (() => {
         // Verificar se o valor preenchido corresponde ao esperado para o campo
         const value = this.element.value;
         if (value.length == 0) {
@@ -49,7 +49,7 @@ class ClientFormInput {
             this.isValid = false;
             this.setAsInvalid('Esse valor não é permitido.')
         }
-    }
+    }).bind();
 
 }
 
@@ -71,7 +71,6 @@ class EnderecoChanger {
         this.bairro.setAttribute('disabled', 'true');
         this.cidade.setAttribute('disabled', 'true');
         this.estado.setAttribute('disabled', 'true');
-        console.log('Campos de endereço desabilitados.')
     }
 
     enableAllFields() {
@@ -82,52 +81,58 @@ class EnderecoChanger {
         this.bairro.removeAttribute('disabled');
         this.cidade.removeAttribute('disabled');
         this.estado.removeAttribute('disabled');
-        console.log('Campos de endereço habilitados.')
+    }
+
+    setValueForFields(logr, num, comp, bai, cid, est) {
+        this.logradouro.value = (typeof logr == 'string') ? logr : '';
+        this.numero.value = (typeof num == 'string') ? num : '';
+        this.complemento.value = (typeof comp == 'string') ? comp : '';
+        this.bairro.value = (typeof bai == 'string') ? bai : '';
+        this.cidade.value = (typeof cid == 'string') ? cid : '';
+        this.estado.value = (typeof est == 'string') ? est.toLowerCase() : '';
+    }
+
+    populateFieldsUsingViaCEP(cep) {
+        this.disableAllFields();
+        this.setValueForFields('...', '...', '...', '...', '...', '...');
+        let self = this; // Alias bypassing THIS conflict
+        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+            if (!("erro" in dados)) {
+                //Atualiza os campos com os valores da consulta.
+                self.setValueForFields(dados.logradouro, '', '', dados.bairro, dados.localidade, dados.uf)
+                self.enableAllFields();
+            }
+            else {
+                //CEP pesquisado não foi encontrado.
+                console.error('Erro: Função ViaCEP ativada, mas CEP não encontrado. Inputs não serão liberados')
+                alert("CEP em formato válido não foi encontrado.");
+            }
+        });
     }
 
 }
 
-function showJSON() {
-}
 
-let jsonCallback;
-function viaCEP(cep) {
-    console.log('Ativando via CEP para ' + cep + '...');
-
-    let url = 'https://www.viacep.com.br/ws/' + cep + '/json/unicode/';
-
-    let request = new XMLHttpRequest();
-    request.open('get', url, true);
-    request.onload = () => {
-        console.log(this.responseText);
-        console.log(this.response);
-    };
-    request.send();
-
-}
-
-
-let inputs = new Map; // TODO: tirar do global após testes
-let enderecoChng;
 
 window.onload = () => {
-
-    // Capturar referências aos campos de endereço para manipulação centralizada
-    enderecoChng = new EnderecoChanger('inputLogradouro', 'inputNumero', 'inputComplemento', 'inputBairro', 'inputCidade', 'selectEstado');
-
+    // Capturar referências aos campos para manipulação centralizada
+    const enderecoChng = new EnderecoChanger('inputLogradouro', 'inputNumero', 'inputComplemento', 'inputBairro', 'inputCidade', 'selectEstado');
 
     // Capturar referência a todos os inputs do form, definindo regras específicas de validação
+    const inputs = new Map;
+    
     inputs.set('nome', new ClientFormInput('inputNomeCompleto', 'helperNomeCompleto', 'Digite o nome completo no cliente', (value) => {
-        // Regra: String alfanumérica, case insensitive, com unicode
-        const regex = /[a-b0-9]+/i;
+        // Regra: Permite letras (a-z) e alguns acentos comuns, case insensitive
+        const regex = /^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]{2,30}$/i;
         return regex.test(value);
     }));
 
     inputs.set('nascimento', new ClientFormInput('inputDataNascimento', 'helperDataNascimento', 'Digite a data de nascimento', (value) => {
-        // Regra: String de tamanho 10, data válida e anterior a hoje
+        // Regra: String de tamanho 10, data válida, anterior ou igual a hoje
         if (value.length != 10) return false;
-        let dateMilisec = Date.parse(value);
-        if (typeof dateMilisec != 'number' || dateMilisec >= Date.now) return false;
+        let dateNow = new Date();
+        let dateInput = new Date(value);
+        if (dateInput.getTime() > dateNow.getTime()) return false;
         return true;
     }));
 
@@ -141,26 +146,33 @@ window.onload = () => {
         // Regra: String numérica de 8 caracteres
         const regex = /^[0-9]{8}$/;
         if (regex.test(value)) {
-            // Ativar o viaCEP, liberar demais campos e retornar valor
-            viaCEP();
+            // Ativar mudanças nos campos com viaCEP, retornar TRUE
+            enderecoChng.populateFieldsUsingViaCEP(value);
             return true;
         }
         else {
-            // Destivar demais campos e retornar FALSE
-
+            // Desativar demais campos e retornar FALSE
+            enderecoChng.disableAllFields();
+            enderecoChng.setValueForFields('', '', '', '', '', '');
             return false;
         }
     }));
 
+    inputs.set('enderLogr', new ClientFormInput('inputLogradouro', null, null, () => { return true }));
+    inputs.set('enderNum', new ClientFormInput('inputNumero', null, null, () => { return true }));
+    inputs.set('enderComp', new ClientFormInput('inputComplemento', null, null, () => { return true }));
+    inputs.set('enderBairro', new ClientFormInput('inputBairro', null, null, () => { return true }));
+    inputs.set('enderCidade', new ClientFormInput('inputCidade', null, null, () => { return true }));
+    inputs.set('enderEstado', new ClientFormInput('selectEstado', null, null, () => { return true }));
 
 
-/*    //Iterar pelos inputs adicionando eventos de saida do campo
-    for(i in inputs) {
-        i[1].element.addEventListener('change', (id) => {
-            console.log('Houve mudança do elemento: ' + id);
+    //Iterar pelos inputs registrados, adicionando eventos de mudança
+    for(let i of inputs) {
+        let elem = i[1].element;
+        elem.addEventListener('change', () => {
+            i[1].validate();
         });
-        console.log('x');
     }
-*/
+
 };
 
