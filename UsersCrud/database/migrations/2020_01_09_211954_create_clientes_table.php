@@ -19,14 +19,14 @@ class CreateClientesTable extends Migration
             $table->string('nome_completo', 100);
             $table->date('nascimento');
             $table->tinyInteger('sexo');
-            
-            $table->string('end_cep', 8);
-            $table->string('end_logradouro', 60);
-            $table->string('end_numero', 10);
-            $table->string('end_complemento', 20);
-            $table->string('end_bairro', 60);
-            $table->string('end_cidade', 30);
-            $table->string('end_uf', 2);
+                        
+            $table->string('end_cep', 8)->nullable();
+            $table->string('end_logradouro', 60)->nullable();
+            $table->string('end_numero', 10)->nullable();
+            $table->string('end_complemento', 20)->nullable();
+            $table->string('end_bairro', 60)->nullable();
+            $table->string('end_cidade', 30)->nullable();
+            $table->string('end_uf', 2)->nullable();
 
             $table->timestamps();
         });

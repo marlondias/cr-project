@@ -19,6 +19,8 @@
     </div>
 
     <div id="contentBox">
+        @include('layout.messages')
+
         @yield('corpo')
     </div>
 

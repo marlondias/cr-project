@@ -2,7 +2,7 @@
 
 @section('corpo')
 <div class="container">
-    {{ Form::open(array('url' => '/clientes/criar', 'id' => 'formCriar')) }}
+    {{ Form::open(array('url' => '/clientes', 'id' => 'formCriar')) }}
         <section class="row">
             <h4 class="col-12">Dados pessoais</h4>
             <div class="form-group col-6">

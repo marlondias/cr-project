@@ -10,16 +10,16 @@ class Cliente extends Model
 
     // Regras para validação de cada campo desse model
     private static $formValidationRules = [
-        'nome_completo' => 'required|string|max:100',
-        'data_nascimento' => 'required|date_format:YYYY-mm-dd',
+        'nome_completo' => 'required|string|max:100|regex:/^[a-z àèìòùáéíóúäëïöüãẽĩõũâêîôû]{2,30}$/i',
+        'data_nascimento' => 'required|date',
         'sexo' => 'required|integer|min:0|max:3',
-        'cep' => 'numeric|digits:8',
-        'ender_logr' => 'string|max:60',
-        'ender_num' => 'string|max:10',
-        'ender_comp' => 'string|max:20',
-        'ender_bairro' => 'string|max:60',
-        'ender_cidade' => 'string|max:30',
-        'ender_uf' => 'alpha|size:2',
+        'cep' => 'nullable|numeric|digits:8',
+        'ender_logr' => 'nullable|string|max:60',
+        'ender_num' => 'nullable|string|max:10',
+        'ender_comp' => 'nullable|string|max:20',
+        'ender_bairro' => 'nullable|string|max:60',
+        'ender_cidade' => 'nullable|string|max:30',
+        'ender_uf' => 'nullable|alpha|size:2',
     ];
 
     public static function getFormValidationRules() {
