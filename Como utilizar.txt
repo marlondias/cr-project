@@ -1,0 +1,11 @@
+Este projeto foi criado usando o framework Laravel na versão 6. Por isso, é necessário que o sistema alvo possua a linguagem PHP na versão 7.1 ou superior e a ferramenta Composer para gerenciamento das dependências.
+
+Instalação:
+1) Abrir terminal na pasta raiz do projeto, "UserCrud".
+2) Copiar o arquivo ".env.example" e renomear para ".env"
+3) Modificar o conteúdo do arquivo ".env" com as credenciais para o banco de dados criado e outras necessidades.
+4) Executar o comando "composer install" para carregamento das dependencias do framework.
+5) Executar o comando "php artisan migrate" para criação das tabelas.
+6) Executar o comando "php artisan db:seed" para criação de itens de exemplo. [Opcional]
+7) Executar o comando "php artisan serve" para utilizar servidor interno da aplicação, no endereço "127.0.0.1:8000".
+
