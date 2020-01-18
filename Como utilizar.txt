@@ -7,5 +7,5 @@ Instalação:
 4) Executar o comando "composer install" para carregamento das dependencias do framework.
 5) Executar o comando "php artisan migrate" para criação das tabelas.
 6) Executar o comando "php artisan db:seed" para criação de itens de exemplo. [Opcional]
-7) Executar o comando "php artisan serve" para utilizar servidor interno da aplicação, no endereço "127.0.0.1:8000".
-
+7) Executar o comando "php artisan key:generate" para gerar uma chave de segurança.
+8) Executar o comando "php artisan serve" para utilizar servidor interno da aplicação, no endereço "127.0.0.1:8000".
