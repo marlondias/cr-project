@@ -118,4 +118,83 @@ class ClientesController extends Controller
         Session::flash('message_info', 'O cliente de ID '. $id .' e nome "' . $nome . '" foi removido de sua base de dados!');
         return redirect('/clientes');
     }
+
+    public function jsonGetAll() {
+        $clientes = Cliente::all();
+        return response($clientes)->header('Content-Type', 'application/json');
+    }
+
+    public function jsonCreate(Request $request) {
+        // Valida entradas do usuário, segundo as regras do modelo.
+        // Se estiver correto, instancia um Cliente, salva e retorna-o.
+        // Se houver problema de validação, retorna os erros.
+
+        $json = array();
+        $data = $request->json()->all();
+        $validator = Validator::make($data, Cliente::getFormValidationRules());
+
+        if ($validator->fails()) {
+            $json['errors'] = $validator->errors();
+        }
+        else {
+            $cliente = new Cliente;
+            Cliente::setFieldsTo($cliente, $data);
+            $cliente->save();
+            $json = $cliente;
+        }
+
+        return response($json)->header('Content-Type', 'application/json');
+    }
+
+    public function jsonGet($id) {
+        // Procura um Cliente com essa ID.
+        // Se encontrar retorna-o como JSON, se não, retorna vazio.
+
+        $cliente = Cliente::find($id);
+        $json = (!empty($cliente)) ? $cliente : [];
+
+        return response($json)->header('Content-Type', 'application/json');
+    }
+
+    public function jsonUpdate(Request $request, $id) {
+        // Busca pelo Cliente com a ID informada e retorna um JSON apropriado,
+        // podendo ser: vazio, array de erros ou o Cliente atualizado.
+
+        $cliente = Cliente::find($id);
+        $json = array();
+
+        if (!empty($cliente)) {
+            // Validar entradas do usuário, segundo as regras do modelo.
+            $data = $request->json()->all();
+            $validator = Validator::make($data, Cliente::getFormValidationRules());
+            if ($validator->fails()) {
+                $json['errors'] = $validator->errors();
+            }
+            else {
+                // Alterar, salvar e buscar novamente para usar como retorno.
+                Cliente::setFieldsTo($cliente, $data);
+                $cliente->save();
+                $json = Cliente::find($id);
+            }
+        }
+
+        return response($json)->header('Content-Type', 'application/json');
+    }
+
+    public function jsonDelete($id) {
+        // Busca pelo Cliente com a ID informada, apaga e retorna o JSON apropriado,
+        $cliente = Cliente::find($id);
+        $json = array();
+        
+        if (!empty($cliente)) {
+            $json = [
+                'old_id' => $id,
+                'old_nome' => $cliente->nome_completo
+            ];
+            $cliente->delete();
+        }
+
+        return response($json)->header('Content-Type', 'application/json');
+    }
+
 }

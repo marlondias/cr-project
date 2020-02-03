@@ -16,11 +16,17 @@ Route::get('/', function () {
 });
 
 Route::get('/clientes', 'ClientesController@index');
-
 Route::get('/clientes/criar', 'ClientesController@create');
 Route::post('/clientes', 'ClientesController@store');
-
 Route::get('/clientes/{id}', 'ClientesController@edit');
 Route::post('/clientes/{id}', 'ClientesController@update');
-
 Route::delete('/clientes/{id}', 'ClientesController@delete');
+
+Route::group(array('prefix' => 'json'), function()
+{
+    Route::get('/clientes', 'ClientesController@jsonGetAll');
+    Route::post('/clientes', 'ClientesController@jsonCreate');
+    Route::get('/clientes/{id}', 'ClientesController@jsonGet');
+    Route::post('/clientes/{id}', 'ClientesController@jsonUpdate');
+    Route::delete('/clientes/{id}', 'ClientesController@jsonDelete');
+});
